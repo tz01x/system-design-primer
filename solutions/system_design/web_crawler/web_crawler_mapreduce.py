@@ -9,8 +9,7 @@ class RemoveDuplicateUrls(MRJob):
         yield line, 1
 
     def reducer(self, key, values):
-        total = sum(values)
-        if total == 1:
+        if (total := sum(values)) == 1:
             yield key, total
 
     def steps(self):

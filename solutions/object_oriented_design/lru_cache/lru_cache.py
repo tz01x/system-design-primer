@@ -34,8 +34,7 @@ class Cache(object):
 
         Accessing a node updates its position to the front of the LRU list.
         """
-        node = self.lookup.get(query)
-        if node is None:
+        if (node := self.lookup.get(query)) is None:
             return None
         self.linked_list.move_to_front(node)
         return node.results
@@ -47,8 +46,7 @@ class Cache(object):
         If the entry is new and the cache is at capacity, removes the oldest entry
         before the new entry is added.
         """
-        node = self.lookup.get(query)
-        if node is not None:
+        if (node := self.lookup.get(query)) is not None:
             # Key exists in cache, update the value
             node.results = results
             self.linked_list.move_to_front(node)
