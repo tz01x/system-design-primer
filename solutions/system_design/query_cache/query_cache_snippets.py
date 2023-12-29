@@ -15,8 +15,7 @@ class QueryApi(object):
 
     def process_query(self, query):
         query = self.parse_query(query)
-        results = self.memory_cache.get(query)
-        if results is None:
+        if (results := self.memory_cache.get(query)) is None:
             results = self.reverse_index_cluster.process_search(query)
             self.memory_cache.set(query, results)
         return results
@@ -58,8 +57,7 @@ class Cache(object):
 
         Accessing a node updates its position to the front of the LRU list.
         """
-        node = self.lookup[query]
-        if node is None:
+        if (node := self.lookup[query]) is None:
             return None
         self.linked_list.move_to_front(node)
         return node.results
@@ -71,8 +69,7 @@ class Cache(object):
         If the entry is new and the cache is at capacity, removes the oldest entry
         before the new entry is added.
         """
-        node = self.map[query]
-        if node is not None:
+        if (node := self.map[query]) is not None:
             # Key exists in cache, update the value
             node.results = results
             self.linked_list.move_to_front(node)

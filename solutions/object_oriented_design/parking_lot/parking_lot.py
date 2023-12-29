@@ -84,8 +84,7 @@ class Level(object):
         self.available_spots += 1
 
     def park_vehicle(self, vehicle):
-        spot = self._find_available_spot(vehicle)
-        if spot is None:
+        if (spot := self._find_available_spot(vehicle)) is None:
             return None
         else:
             spot.park_vehicle(vehicle)

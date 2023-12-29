@@ -31,8 +31,7 @@ class SpendingByCategory(MRJob):
         (2016-01, gas), 50
         """
         timestamp, category, amount = line.split('\t')
-        period = self. extract_year_month(timestamp)
-        if period == self.current_year_month():
+        if (period := self. extract_year_month(timestamp)) == self.current_year_month():
             yield (period, category), amount
 
     def reducer(self, key, values):
